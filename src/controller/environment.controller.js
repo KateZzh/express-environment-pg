@@ -1,4 +1,4 @@
-const express = require("express");
+const express = require('express');
 const {
   getAllEnvironment,
   createEnvironment,
@@ -6,12 +6,12 @@ const {
   updateEnvironment,
   deleteEnvironment,
   patchEnvironment,
-} = require("../service/environment.service");
-const { isValidEnvironmentId, isValidEnvironmentBody, } = require("../helper/validation");
+} = require('../service/environment.service');
+const { isValidEnvironmentId, isValidEnvironmentBody } = require('../helper/validation');
 
 const router = express.Router();
 
-router.get("/", async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const data = await getAllEnvironment();
 
@@ -21,7 +21,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.post("/", isValidEnvironmentBody, async (req, res) => {
+router.post('/', isValidEnvironmentBody, async (req, res) => {
   try {
     const { label, category, priority } = req.body;
     const data = await createEnvironment(label, category, priority);
@@ -32,7 +32,7 @@ router.post("/", isValidEnvironmentBody, async (req, res) => {
   }
 });
 
-router.get("/:id", isValidEnvironmentId, async (req, res) => {
+router.get('/:id', isValidEnvironmentId, async (req, res) => {
   try {
     const { id } = req.params;
     const data = await getEnvironmentById(id);
@@ -43,20 +43,19 @@ router.get("/:id", isValidEnvironmentId, async (req, res) => {
   }
 });
 
-router.put("/:id", isValidEnvironmentBody, isValidEnvironmentId, async (req, res) => {
-    try {
-      const { id } = req.params;
-      const { label, category, priority } = req.body;
-      const data = await updateEnvironment(id, label, category, priority);
+router.put('/:id', isValidEnvironmentBody, isValidEnvironmentId, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { label, category, priority } = req.body;
+    const data = await updateEnvironment(id, label, category, priority);
 
-      res.status(200).send(data);
-    } catch (error) {
-      res.status(404).send(error.message);
-    }
+    res.status(200).send(data);
+  } catch (error) {
+    res.status(404).send(error.message);
   }
-);
+});
 
-router.delete("/:id", isValidEnvironmentId, async (req, res) => {
+router.delete('/:id', isValidEnvironmentId, async (req, res) => {
   try {
     const { id } = req.params;
     const data = await deleteEnvironment(id);
@@ -67,7 +66,7 @@ router.delete("/:id", isValidEnvironmentId, async (req, res) => {
   }
 });
 
-router.patch("/:id", isValidEnvironmentId, async (req, res) => {
+router.patch('/:id', isValidEnvironmentId, async (req, res) => {
   try {
     const { id } = req.params;
     const clientData = req.body;
